@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom'
-import HomeTwoToneIcon from '@material-ui/icons/Home';
 import { Button } from '@material-ui/core';
 import InfoTwoToneIcon from '@material-ui/icons/InfoTwoTone';
-import HttpTwoToneIcon from '@material-ui/icons/HttpTwoTone';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import AccountBalanceTwoToneIcon from '@material-ui/icons/AccountBalanceTwoTone';
+import AnnouncementTwoToneIcon from '@material-ui/icons/AnnouncementTwoTone';
 import './NavBar.css'
 
 function NavBar() {
@@ -17,7 +16,7 @@ function NavBar() {
                     <Button
                         variant="contained"
                         color="secondary"
-                        startIcon={<HomeTwoToneIcon />}
+                        startIcon={<AccountBalanceTwoToneIcon />}
                         style={{margin: 15, backgroundColor: 'cadetblue'}}
                     >
                         Home
@@ -27,10 +26,10 @@ function NavBar() {
                     <Button
                         variant="contained"
                         color="secondary"
-                        startIcon={<TrendingUpIcon />}
+                        startIcon={<AnnouncementTwoToneIcon />}
                         style={{margin: 15, backgroundColor: 'cadetblue'}}
                     >
-                        Place Ad
+                        Ads
                     </Button>
                 </Link>
                 <Link to='/about' style={{textDecoration: 'none'}}>
@@ -40,7 +39,7 @@ function NavBar() {
                     startIcon={<InfoTwoToneIcon />}
                     style={{margin: 15, backgroundColor: 'cadetblue'}}
                 >
-                    About
+                    About KCL
                 </Button>
                 </Link>
             </div>
