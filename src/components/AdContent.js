@@ -72,9 +72,9 @@ function AdContent() {
       
     const onPlaceAdSubmit = (e) => {
         e.preventDefault();
-        // if (values['image_url'] === '') {
-        //     values['image_url'] = "https://bit.ly/3aue8MV"
-        // }
+        if (values['image_url'].length < 4) {
+            values['image_url'] = "https://bit.ly/3aue8MV"
+        }
 
         return fetch('http://localhost:3001/ads', {
             method: 'POST', 
