@@ -1,7 +1,7 @@
 import './Ad.css'
 import Paper from '@material-ui/core/Paper';
 
-function Ad({image, title, price, body, timestamp, tagid}) {
+function Ad({image, title, price, body, timestamp, tagid, postsid}) {
     function buyOrSell (tagid) {
         if (tagid === 1) {
             return "I Want to Sell!"
@@ -18,7 +18,7 @@ function Ad({image, title, price, body, timestamp, tagid}) {
             <h2 className='Title'>{title}</h2>,
             <h3 className='Tag'>{buyOrSell(tagid)} ${price}</h3>,
             <p className='Body'>{body}</p>,
-            <div className='Timestamp'>{timestamp}</div>
+            <div className='Timestamp'>{timestamp} ID #{postsid}</div>
         ]}
         </div>
         </Paper>
