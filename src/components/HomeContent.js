@@ -68,7 +68,7 @@ const HomeContent= () => {
                 <div>Coming Soon!</div>
             </div>    
             <div className="Adlist">
-            {mockData.map(ad => <Ad image={ad['image_url']} title={ad['post_title']} price={ad['price']} body={ad['post_body']} timestamp={ad['created_at']} tagid={ad['tag_id']} />
+            {mockData.map(ad => <Ad image={ad['image_url']} title={ad['post_title']} price={ad['price']} body={ad['post_body']} timestamp={ad['created_at']} tagid={ad['tag_id']} postsid={ad['postsid']}/>
             )}
             </div>
             <div className="Locations">
