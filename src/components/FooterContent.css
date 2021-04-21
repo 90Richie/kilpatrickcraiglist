@@ -1,0 +1,7 @@
+.App-footer {
+    background-color: #172f4b;
+    color: darkslategray;
+    position: relative;
+    bottom: 0;
+    grid-row: -2;
+}

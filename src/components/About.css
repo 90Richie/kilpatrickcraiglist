@@ -1,0 +1,5 @@
+.About {
+    grid-row: 2;
+    height: auto;
+    min-height: 77vh;
+}

@@ -1,0 +1,13 @@
+.Nav-header {
+    background-color: #00308f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 4em;
+    font-family: 'copperplate';
+    color: whitesmoke;
+    grid-row: 1;
+    height: 18vh;
+  }

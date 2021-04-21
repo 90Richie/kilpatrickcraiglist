@@ -1,9 +1,54 @@
 .adcontainer {
-    height: 300px;
-    width: 300px;
+    height: auto;
+    width: auto;
+    display: grid;
+    grid-template-columns: 200px 30vw 10vw;
+    grid-template-rows: 5vh auto auto;
+    justify-content: left;
+    vertical-align: top;
 }
 
 img {
-    height: 50px;
-    width: 50px;
+    grid-column: 1;
+    grid-row: 1/-1;
+    height: 150px;
+    width: 150px;
 }
+
+.Title {
+    display: grid;
+    justify-content: left;
+    vertical-align: top;
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.Tag {
+        justify-content: left;
+        vertical-align: top;
+        grid-row: 1;
+        grid-column: 3;
+}
+
+.Price {
+    grid-row: 1;
+    grid-column: 3;
+}
+
+.Body {
+    justify-content: left;
+    vertical-align: top;
+    grid-row: 2;
+    grid-column: 2/3;
+    height: auto;
+}
+
+.Timestamp {
+    grid-row: 3;
+    grid-column: 3;
+    display: grid;
+    justify-content: right;
+    vertical-align: bottom;
+    font-size: small;
+}
+

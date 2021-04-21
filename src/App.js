@@ -13,7 +13,7 @@ import About from './components/About.js'
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
         <Router>
           <NavBar />
           <Switch>
