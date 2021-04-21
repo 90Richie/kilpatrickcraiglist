@@ -72,6 +72,9 @@ function AdContent() {
       
     const onPlaceAdSubmit = (e) => {
         e.preventDefault();
+        // if (values['image_url'] === '') {
+        //     values['image_url'] = "https://bit.ly/3aue8MV"
+        // }
 
         return fetch('http://localhost:3001/ads', {
             method: 'POST', 
@@ -91,6 +94,36 @@ function AdContent() {
             "tag_id": 1,
             "user_id": 1
         }))
+    }
+
+    const onEdit = (e) => {
+        e.preventDefault();
+        const newObj = {...adId,
+                        ...values};                
+
+        return fetch('http://localhost:3001/ads', {
+            method: 'PATCH', 
+            mode:'cors',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newObj)
+        })
+        .then(data => {
+            setValues({
+            "post_title": "",
+            "price": "",
+            "post_body": "",
+            "image_url": "",
+            "base_id": 1,
+            "tag_id": 1,
+            "user_id": 1
+        })
+        setAdId({
+            "postsid": ""
+        })
+    })
     }
     
     const onDelete = (e) => {
@@ -217,10 +250,10 @@ function AdContent() {
                         autoFocus
                         margin="dense"
                         id="postsid"
-                        value={values.postsid}
+                        value={adId['postsid']}
                         label="Post ID"
                         variant="filled"
-                        onChange={handleChange("postsid")}
+                        onChange={handleChangeAdId("postsid")}
                         style={{ marginRight: '7vw' }}
                     />
                     <TextField
@@ -301,8 +334,8 @@ function AdContent() {
                     <Button onClick={handleCloseEditAd} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleCloseEditAd} color="primary">
-                        Submit
+                    <Button onClick={onEdit} color="primary">
+                        Edit
                      </Button>
                 </DialogActions>
             </Dialog>

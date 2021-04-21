@@ -24,7 +24,7 @@ const HomeContent= () => {
                 <div>Coming Soon!</div>
             </div>    
             <div className="Adlist">
-            {ads.map(ad => <Ad image={ad['image_url']} title={ad['post_title']} price={ad['price']} body={ad['post_body']} timestamp={ad['created_at']} tagid={ad['tag_id']} postsid={ad['postsid']}/>
+            {ads.map(ad => <Ad image={ad['image_url']} title={ad['post_title']} price={ad['price']} body={ad['post_body']} timestamp={ad['created_at']} tagid={ad['tag_id']} postsid={ad['postsid']} location={ad['base_id']}/>
             )}
             </div>
             <div className="Locations">
