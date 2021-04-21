@@ -1,15 +1,6 @@
 .App {
   text-align: center;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto auto;
 }
-
-.App-header {
-  background-color: #00308f;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-

@@ -18,7 +18,7 @@ const mockData = [
         "postsid": 2,
         "tag_id": 2,
         "user_id": 1,
-        "post_title": "Want Charizard Pokemon Card",
+        "post_title": "Charizard Pokemon Card",
         "post_body": "I am willing to buy any charizard pokemon card willing to pay up to $50. Contact me at 555-555-5555",
         "base_id": 1,
         "price": 50,
@@ -63,15 +63,15 @@ const mockData = [
 const HomeContent= () => {
     return (
         <div className="Home">
-            <div>
+            <div className="Filters">
                 <h1>Filters</h1>
                 <div>Coming Soon!</div>
             </div>    
-            <div>
-            {mockData.map(ad => <Ad image={ad['image_url']} title={ad['post_title']} price={ad['price']} body={ad['post_body']} timestamp={ad['created_at']} />
+            <div className="Adlist">
+            {mockData.map(ad => <Ad image={ad['image_url']} title={ad['post_title']} price={ad['price']} body={ad['post_body']} timestamp={ad['created_at']} tagid={ad['tag_id']} />
             )}
             </div>
-            <div>
+            <div className="Locations">
                 <h1>Locations</h1>
                 <div>Coming Soon!</div>
             </div> 

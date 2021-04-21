@@ -17,7 +17,7 @@ function NavBar() {
                         variant="contained"
                         color="secondary"
                         startIcon={<AccountBalanceTwoToneIcon />}
-                        style={{margin: 15, backgroundColor: 'cadetblue'}}
+                        style={{margin: 15, backgroundColor: '#ffcc98', color: '#172f4b', width: "11vw", fontWeight: "900"}}
                     >
                         Home
                     </Button>
@@ -27,7 +27,7 @@ function NavBar() {
                         variant="contained"
                         color="secondary"
                         startIcon={<AnnouncementTwoToneIcon />}
-                        style={{margin: 15, backgroundColor: 'cadetblue'}}
+                        style={{margin: 15, backgroundColor: '#ffcc98', color: '#172f4b', width: "11vw", fontWeight: "900"}}
                     >
                         Ads
                     </Button>
@@ -37,7 +37,7 @@ function NavBar() {
                     variant="contained"
                     color="secondary"
                     startIcon={<InfoTwoToneIcon />}
-                    style={{margin: 15, backgroundColor: 'cadetblue'}}
+                    style={{margin: 15, backgroundColor: '#ffcc98', color: '#172f4b', width: "11vw", fontWeight: "900"}}
                 >
                     About KCL
                 </Button>

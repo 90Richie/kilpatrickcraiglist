@@ -1,0 +1,30 @@
+.Home {
+    grid-row: 2;
+    height: auto;
+    min-height: 77vh;
+    display: grid;
+    grid-column: auto auto auto;
+    grid-row: auto;
+}
+
+.Filters {
+    width: 20vw;
+    grid-column: 1;
+    justify-content: center;
+    background-color: rgb(215, 215, 215);
+}
+
+.Adlist {
+    max-width: 80vw;
+    min-width: 60vw;
+    grid-column: 2;
+    justify-items: center;
+    background-color: whitesmoke;
+}
+
+.Locations {
+    width: 20vw;
+    grid-column: 3;
+    justify-content: center;
+    background-color: rgb(215, 215, 215);
+}
