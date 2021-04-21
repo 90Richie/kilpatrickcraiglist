@@ -6,6 +6,12 @@
     grid-template-rows: 5vh auto auto;
     justify-content: left;
     vertical-align: top;
+    opacity: .85;
+}
+
+.adcontainer:hover{
+    opacity: 1;
+    animation: bounce 0.8s;
 }
 
 img {
@@ -52,3 +58,14 @@ img {
     font-size: small;
 }
 
+@keyframes bounce {
+    0%, 20%, 60%, 100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+    }
+  
+    40% {
+      -webkit-transform: translateY(-10px);
+      transform: translateY(-10px);
+    }
+}
