@@ -11,20 +11,23 @@ import ImageIcon from '@material-ui/icons/Image';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function AdContent() {
     const [openPlaceAd, setOpenPlaceAd] = useState(false);
     const [openEditAd, setOpenEditAd] = useState(false);
     const [openRemoveAd, setOpenRemoveAd] = useState(false);
-    const [location, setLocation] = useState('Luke AFB');
-    const [filter, setFilter] = useState('Selling');
+    const [adId, setAdId] = useState({
+        "postsid" : ""
+    });
     const [values, setValues] = useState({
-        title: '',
-        price: '',
-        body: '',
-        imageUrl: '',
-        postsid: ''
+        "post_title": "",
+        "price": "",
+        "post_body": "",
+        "image_url": "",
+        "base_id": 1,
+        "tag_id": 1,
+        "user_id": 1
     });
 
     const handleClickOpenPlaceAd = () => {
@@ -56,12 +59,57 @@ function AdContent() {
     };
 
     const handleChangeLocation = (event) => {
-        setLocation(event.target.value)
+        setValues({ ...values, ['base_id']: event.target.value })
       };
 
     const handleChangeFilters = (event) => {
-        setFilter(event.target.value)
-      };  
+        setValues({ ...values, ['tag_id']: event.target.value })
+      };
+
+    const handleChangeAdId = (prop) => (event) => {
+        setAdId({ ...adId, [prop]: event.target.value });
+    };   
+      
+    const onPlaceAdSubmit = (e) => {
+        e.preventDefault();
+
+        return fetch('http://localhost:3001/ads', {
+            method: 'POST', 
+            mode:'cors',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        })
+        .then(data => setValues({
+            "post_title": "",
+            "price": "",
+            "post_body": "",
+            "image_url": "",
+            "base_id": 1,
+            "tag_id": 1,
+            "user_id": 1
+        }))
+    }
+    
+    const onDelete = (e) => {
+        e.preventDefault();
+        console.log(adId)
+
+        return fetch('http://localhost:3001/ads', {
+            method: 'DELETE', 
+            mode:'cors',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(adId)
+            })
+            .then(data => setAdId({
+                "postsid" : ""
+            }))
+    }
 
     return (
         <div className="Ads">
@@ -78,18 +126,18 @@ function AdContent() {
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="title"
-                        value={values.title}
+                        id="post_title"
+                        value={values['post_title']}
                         label="Title"
                         variant="filled"
-                        onChange={handleChange("title")}
+                        onChange={handleChange("post_title")}
                         style={{ marginRight: '7vw' }}
                     />
                     <TextField
                         autoFocus
                         margin="dense"
                         id="price"
-                        value={values.price}
+                        value={values['price']}
                         label="Price - USD"
                         variant="filled"
                         onChange={handleChange("price")}
@@ -98,47 +146,47 @@ function AdContent() {
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="imageUrl"
-                        value={values.imageUrl}
+                        id="image_url"
+                        value={values['image_url']}
                         label="Image URL"
                         variant="filled"
-                        onChange={handleChange("imageUrl")}
+                        onChange={handleChange("image_url")}
                     />
                     <TextField
                         select
                         fullWidth
                         margin="dense"
-                        id="location"
+                        id="base_id"
                         label="Location"
                         variant="filled"
-                        value={location}
+                        value={values['base_id']}
                         onChange={handleChangeLocation}
                     > 
-                        <MenuItem value={"Luke AFB"}>Luke AFB</MenuItem>
-                        <MenuItem value={"Davis Monthan AFB"}>Davis Monthan AFB</MenuItem>
+                        <MenuItem value={1}>Luke AFB</MenuItem>
+                        <MenuItem value={2}>Davis Monthan AFB</MenuItem>
                     </TextField>
                     <TextField
                         select
                         fullWidth
                         margin="dense"
-                        id="filters"
+                        id="tag_id"
                         label="Buying or Selling?"
                         variant="filled"
-                        value={filter}
+                        value={values['tag_id']}
                         onChange={handleChangeFilters}
                     >
-                        <MenuItem value={"Selling"}>Selling</MenuItem>
-                        <MenuItem value={"Buying"}>Buying</MenuItem>
+                        <MenuItem value={1}>Selling</MenuItem>
+                        <MenuItem value={2}>Buying</MenuItem>
                     </TextField>
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="body"
-                        value={values.body}
+                        id="post_body"
+                        value={values['post_body']}
                         label="Description (including contact info)"
                         variant="outlined"
                         fullWidth
-                        onChange={handleChange("body")}
+                        onChange={handleChange("post_body")}
                     />
                 </DialogContent>
                 <DialogActions>
@@ -153,7 +201,7 @@ function AdContent() {
                     <Button onClick={handleClosePlaceAd} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleClosePlaceAd} color="primary">
+                    <Button onClick={onPlaceAdSubmit} color="primary">
                         Submit
                      </Button>
                 </DialogActions>
@@ -178,18 +226,18 @@ function AdContent() {
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="title"
-                        value={values.title}
+                        id="post_title"
+                        value={values['post_title']}
                         label="Title"
                         variant="filled"
-                        onChange={handleChange("title")}
+                        onChange={handleChange("post_title")}
                         style={{ marginRight: '7vw' }}
                     />
                     <TextField
                         autoFocus
                         margin="dense"
                         id="price"
-                        value={values.price}
+                        value={values['price']}
                         label="Price - USD"
                         variant="filled"
                         onChange={handleChange("price")}
@@ -198,47 +246,47 @@ function AdContent() {
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="imageUrl"
-                        value={values.imageUrl}
+                        id="image_url"
+                        value={values['image_url']}
                         label="Image URL"
                         variant="filled"
-                        onChange={handleChange("imageUrl")}
+                        onChange={handleChange("image_url")}
                     />
                     <TextField
                         select
                         fullWidth
                         margin="dense"
-                        id="location"
+                        id="base_id"
                         label="Location"
                         variant="filled"
-                        value={location}
+                        value={values['base_id']}
                         onChange={handleChangeLocation}
                     > 
-                        <MenuItem value={"Luke AFB"}>Luke AFB</MenuItem>
-                        <MenuItem value={"Davis Monthan AFB"}>Davis Monthan AFB</MenuItem>
+                        <MenuItem value={1}>Luke AFB</MenuItem>
+                        <MenuItem value={2}>Davis Monthan AFB</MenuItem>
                     </TextField>
                     <TextField
                         select
                         fullWidth
                         margin="dense"
-                        id="filters"
+                        id="tag_id"
                         label="Buying or Selling?"
                         variant="filled"
-                        value={filter}
+                        value={values['tag_id']}
                         onChange={handleChangeFilters}
                     >
-                        <MenuItem value={"Selling"}>Selling</MenuItem>
-                        <MenuItem value={"Buying"}>Buying</MenuItem>
+                        <MenuItem value={1}>Selling</MenuItem>
+                        <MenuItem value={2}>Buying</MenuItem>
                     </TextField>
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="body"
-                        value={values.body}
+                        id="post_body"
+                        value={values['post_body']}
                         label="Description (including contact info)"
                         variant="outlined"
                         fullWidth
-                        onChange={handleChange("body")}
+                        onChange={handleChange("post_body")}
                     />
                 </DialogContent>
                 <DialogActions>
@@ -269,10 +317,10 @@ function AdContent() {
                         autoFocus
                         margin="dense"
                         id="postsid"
-                        value={values.postsid}
+                        value={adId['postsid']}
                         label="Post ID"
                         variant="filled"
-                        onChange={handleChange("postsid")}
+                        onChange={handleChangeAdId("postsid")}
                         style={{ marginRight: '7vw' }}
                     />
                 </DialogContent>
@@ -280,7 +328,7 @@ function AdContent() {
                     <Button onClick={handleCloseRemoveAd} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleCloseRemoveAd} color="secondary" variant='outlined'>
+                    <Button onClick={onDelete} color="secondary" variant='outlined'>
                         Delete
                      </Button>
                 </DialogActions>
