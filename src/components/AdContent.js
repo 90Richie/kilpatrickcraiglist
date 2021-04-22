@@ -17,6 +17,10 @@ function AdContent() {
     const [openPlaceAd, setOpenPlaceAd] = useState(false);
     const [openEditAd, setOpenEditAd] = useState(false);
     const [openRemoveAd, setOpenRemoveAd] = useState(false);
+    const [openAdditionalEditAd, setOpenAdditionalEditAd] = useState(false);
+    const [adSubmitMessage, setAdSumbitMessage] = useState(false);
+    const [adEditMessage, setAdEditMessage] = useState(false);
+    const [adDeleteMessage, setAdDeleteMessage] = useState(false);
     const [adId, setAdId] = useState({
         "postsid" : ""
     });
@@ -29,6 +33,7 @@ function AdContent() {
         "tag_id": 1,
         "user_id": 1
     });
+
 
     const handleClickOpenPlaceAd = () => {
         setOpenPlaceAd(true);
@@ -44,6 +49,7 @@ function AdContent() {
 
     const handleCloseEditAd = () => {
         setOpenEditAd(false);
+        setOpenAdditionalEditAd(false);
     };
 
     const handleClickOpenRemoveAd = () => {
@@ -52,6 +58,18 @@ function AdContent() {
 
     const handleCloseRemoveAd = () => {
         setOpenRemoveAd(false);
+    };
+
+    const handleCloseAdSubmitMessage = () => {
+        setAdSumbitMessage(false);
+    };
+
+    const handleCloseAdEditMessage = () => {
+        setAdEditMessage(false);
+    };
+
+    const handleCloseAdDeleteMessage = () => {
+        setAdDeleteMessage(false);
     };
 
     const handleChange = (prop) => (event) => {
@@ -72,6 +90,8 @@ function AdContent() {
       
     const onPlaceAdSubmit = (e) => {
         e.preventDefault();
+        setAdSumbitMessage(true);
+
         if (values['image_url'].length < 4) {
             values['image_url'] = "https://bit.ly/3aue8MV"
         }
@@ -98,6 +118,7 @@ function AdContent() {
 
     const onEdit = (e) => {
         e.preventDefault();
+        setAdEditMessage(true);
         const newObj = {...adId,
                         ...values};                
 
@@ -128,7 +149,7 @@ function AdContent() {
     
     const onDelete = (e) => {
         e.preventDefault();
-        console.log(adId)
+        setAdDeleteMessage(false);
 
         return fetch('http://localhost:3001/ads', {
             method: 'DELETE', 
@@ -144,6 +165,15 @@ function AdContent() {
             }))
     }
 
+    const getAdInfo = (e) => {
+        e.preventDefault();
+        setOpenAdditionalEditAd(true);
+
+        return fetch(`http://localhost:3001/ads/${adId.postsid}`)
+            .then(res => res.json())
+            .then(data => setValues(...data))
+    }
+
     return (
         <div className="Ads">
             <h2>Select One of the Following</h2>
@@ -155,89 +185,82 @@ function AdContent() {
                 <DialogContent>
                     <DialogContentText>
                         Please fill out the following information about your ad
-          </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="post_title"
-                        value={values['post_title']}
-                        label="Title"
-                        variant="filled"
-                        onChange={handleChange("post_title")}
-                        style={{ marginRight: '7vw' }}
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="price"
-                        value={values['price']}
-                        label="Price - USD"
-                        variant="filled"
-                        onChange={handleChange("price")}
-                        style={{ marginRight: '7vw' }}
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="image_url"
-                        value={values['image_url']}
-                        label="Image URL"
-                        variant="filled"
-                        onChange={handleChange("image_url")}
-                    />
-                    <TextField
-                        select
-                        fullWidth
-                        margin="dense"
-                        id="base_id"
-                        label="Location"
-                        variant="filled"
-                        value={values['base_id']}
-                        onChange={handleChangeLocation}
-                    > 
-                        <MenuItem value={1}>Luke AFB</MenuItem>
-                        <MenuItem value={2}>Davis Monthan AFB</MenuItem>
-                    </TextField>
-                    <TextField
-                        select
-                        fullWidth
-                        margin="dense"
-                        id="tag_id"
-                        label="Buying or Selling?"
-                        variant="filled"
-                        value={values['tag_id']}
-                        onChange={handleChangeFilters}
-                    >
-                        <MenuItem value={1}>Selling</MenuItem>
-                        <MenuItem value={2}>Buying</MenuItem>
-                    </TextField>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="post_body"
-                        value={values['post_body']}
-                        label="Description (including contact info)"
-                        variant="outlined"
-                        fullWidth
-                        onChange={handleChange("post_body")}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<ImageIcon />}
-                        
-                    >
-                        Add a photo
-                    </Button>
-                    <Button onClick={handleClosePlaceAd} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={onPlaceAdSubmit} color="primary">
-                        Submit
-                     </Button>
-                </DialogActions>
+                        </DialogContentText>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                id="post_title"
+                                value={values['post_title']}
+                                label="Title"
+                                variant="filled"
+                                onChange={handleChange("post_title")}
+                                style={{ marginRight: '7vw' }}
+                            />
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                id="price"
+                                value={values['price']}
+                                label="Price - USD"
+                                variant="filled"
+                                onChange={handleChange("price")}
+                                style={{ marginRight: '7vw' }}
+                            />
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                id="image_url"
+                                value={values['image_url']}
+                                label="Image URL"
+                                variant="filled"
+                                onChange={handleChange("image_url")}
+                            />
+                            <TextField
+                                select
+                                fullWidth
+                                margin="dense"
+                                id="base_id"
+                                label="Location"
+                                variant="filled"
+                                value={values['base_id']}
+                                onChange={handleChangeLocation}
+                            > 
+                                <MenuItem value={2}>Fort Hood</MenuItem>
+                                <MenuItem value={3}>Lackland JBSA</MenuItem>
+                            </TextField>
+                            <TextField
+                                select
+                                fullWidth
+                                margin="dense"
+                                id="tag_id"
+                                label="Buying or Selling?"
+                                variant="filled"
+                                value={values['tag_id']}
+                                onChange={handleChangeFilters}
+                            >
+                                <MenuItem value={1}>Wanted</MenuItem>
+                                <MenuItem value={2}>Buying</MenuItem>
+                                <MenuItem value={3}>Selling</MenuItem>
+                            </TextField>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                id="post_body"
+                                value={values['post_body']}
+                                label="Description (including contact info)"
+                                variant="outlined"
+                                fullWidth
+                                onChange={handleChange("post_body")}
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClosePlaceAd} color="primary">
+                                Cancel
+                            </Button>
+                            <Button variant='contained' onClick={onPlaceAdSubmit} color="primary">
+                                Submit
+                            </Button>
+                        </DialogActions>
             </Dialog>
 
             <Dialog open={openEditAd} onClose={handleCloseEditAd} aria-labelledby="form-dialog-title" width="50vw" margin="2vh">
@@ -245,99 +268,102 @@ function AdContent() {
                 <DialogContent>
                     <DialogContentText>
                         Please edit the data below
-          </DialogContentText>
-                     <TextField
-                        autoFocus
-                        margin="dense"
-                        id="postsid"
-                        value={adId['postsid']}
-                        label="Post ID"
-                        variant="filled"
-                        onChange={handleChangeAdId("postsid")}
-                        style={{ marginRight: '7vw' }}
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="post_title"
-                        value={values['post_title']}
-                        label="Title"
-                        variant="filled"
-                        onChange={handleChange("post_title")}
-                        style={{ marginRight: '7vw' }}
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="price"
-                        value={values['price']}
-                        label="Price - USD"
-                        variant="filled"
-                        onChange={handleChange("price")}
-                        style={{ marginRight: '7vw' }}
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="image_url"
-                        value={values['image_url']}
-                        label="Image URL"
-                        variant="filled"
-                        onChange={handleChange("image_url")}
-                    />
-                    <TextField
-                        select
-                        fullWidth
-                        margin="dense"
-                        id="base_id"
-                        label="Location"
-                        variant="filled"
-                        value={values['base_id']}
-                        onChange={handleChangeLocation}
-                    > 
-                        <MenuItem value={1}>Luke AFB</MenuItem>
-                        <MenuItem value={2}>Davis Monthan AFB</MenuItem>
-                    </TextField>
-                    <TextField
-                        select
-                        fullWidth
-                        margin="dense"
-                        id="tag_id"
-                        label="Buying or Selling?"
-                        variant="filled"
-                        value={values['tag_id']}
-                        onChange={handleChangeFilters}
-                    >
-                        <MenuItem value={1}>Selling</MenuItem>
-                        <MenuItem value={2}>Buying</MenuItem>
-                    </TextField>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="post_body"
-                        value={values['post_body']}
-                        label="Description (including contact info)"
-                        variant="outlined"
-                        fullWidth
-                        onChange={handleChange("post_body")}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<ImageIcon />}
-                        
-                    >
-                        Add a photo
-                    </Button>
-                    <Button onClick={handleCloseEditAd} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={onEdit} color="primary">
-                        Edit
-                     </Button>
-                </DialogActions>
+                        </DialogContentText>
+                                    <TextField
+                                        autoFocus
+                                        margin="dense"
+                                        id="postsid"
+                                        value={adId['postsid']}
+                                        label="Post ID"
+                                        variant="filled"
+                                        onChange={handleChangeAdId("postsid")}
+                                        style={{ marginRight: '7vw' }}
+                                    />
+                                    <Button onClick={getAdInfo}>Find Ad Info</Button>
+                </DialogContent>                    
+            </Dialog>
+
+                <Dialog open={openAdditionalEditAd} onClose={handleCloseEditAd} aria-labelledby="form-dialog-title" width="50vw" margin="2vh">
+                    <DialogTitle id="form-dialog-title">Edit Existing Ad</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Please edit the data below
+                            </DialogContentText>                                                
+                                    <TextField
+                                        autoFocus
+                                        margin="dense"
+                                        id="post_title"
+                                        value={values['post_title']}
+                                        label="Title"
+                                        variant="filled"
+                                        onChange={handleChange("post_title")}
+                                        style={{ marginRight: '7vw' }}
+                                    />
+                                    <TextField
+                                        autoFocus
+                                        margin="dense"
+                                        id="price"
+                                        value={values['price']}
+                                        label="Price - USD"
+                                        variant="filled"
+                                        onChange={handleChange("price")}
+                                        style={{ marginRight: '7vw' }}
+                                    />
+                                    <TextField
+                                        autoFocus
+                                        margin="dense"
+                                        id="image_url"
+                                        value={values['image_url']}
+                                        label="Image URL"
+                                        variant="filled"
+                                        onChange={handleChange("image_url")}
+                                    />
+                                    <TextField
+                                        select
+                                        fullWidth
+                                        margin="dense"
+                                        id="base_id"
+                                        label="Location"
+                                        variant="filled"
+                                        value={values['base_id']}
+                                        onChange={handleChangeLocation}
+                                    > 
+                                        <MenuItem value={2}>Fort Hood</MenuItem>
+                                        <MenuItem value={3}>Lackland JBSA</MenuItem>
+                                    </TextField>
+                                    <TextField
+                                        select
+                                        fullWidth
+                                        margin="dense"
+                                        id="tag_id"
+                                        label="Buying or Selling?"
+                                        variant="filled"
+                                        value={values['tag_id']}
+                                        onChange={handleChangeFilters}
+                                    >
+                                        <MenuItem value={1}>Wanted</MenuItem>
+                                        <MenuItem value={2}>Buying</MenuItem>
+                                        <MenuItem value={3}>Selling</MenuItem>
+                                    </TextField>
+                                    <TextField
+                                        autoFocus
+                                        margin="dense"
+                                        id="post_body"
+                                        value={values['post_body']}
+                                        label="Description (including contact info)"
+                                        variant="outlined"
+                                        fullWidth
+                                        onChange={handleChange("post_body")}
+                                    />
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleCloseEditAd} color="primary">
+                                        Cancel
+                                    </Button>
+                                    <Button variant='contained' onClick={onEdit} color="primary">
+                                        Save Changes
+                                    </Button>
+                                </DialogActions>
             </Dialog>
 
             <Dialog open={openRemoveAd} onClose={handleCloseRemoveAd} aria-labelledby="form-dialog-title" width="50vw" margin="2vh">
@@ -365,6 +391,27 @@ function AdContent() {
                         Delete
                      </Button>
                 </DialogActions>
+            </Dialog>
+
+            <Dialog open={adSubmitMessage}  aria-labelledby="form-dialog-title" width="50vw" margin="2vh">
+                <DialogTitle id="form-dialog-title">Ad Submitted!</DialogTitle>
+                <DialogContent>
+                            <Button onClick={handleCloseAdSubmitMessage}>Okay</Button>
+                </DialogContent>                    
+            </Dialog>
+
+            <Dialog open={adEditMessage} aria-labelledby="form-dialog-title" width="50vw" margin="2vh">
+                <DialogTitle id="form-dialog-title">Changes Saved!</DialogTitle>
+                <DialogContent>
+                            <Button onClick={handleCloseAdEditMessage}>Okay</Button>
+                </DialogContent>                    
+            </Dialog>
+
+            <Dialog open={adDeleteMessage}  aria-labelledby="form-dialog-title" width="50vw" margin="2vh">
+                <DialogTitle id="form-dialog-title">Ad Deleted!</DialogTitle>
+                <DialogContent>
+                            <Button onClick={handleCloseAdDeleteMessage}>Okay</Button>
+                </DialogContent>                    
             </Dialog>
         </div>
     )
