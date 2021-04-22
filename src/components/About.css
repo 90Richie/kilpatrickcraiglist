@@ -1,5 +1,5 @@
-.About {
-    grid-row: 2;
-    height: auto;
-    min-height: 77vh;
+
+body {
+    font-family: Arial, Robato, sans-serif;
+    margin: 0;
 }
