@@ -31,7 +31,8 @@ function AdContent() {
         "image_url": "",
         "base_id": 1,
         "tag_id": 1,
-        "user_id": 1
+        "user_id": 1,
+        "contact_info": ""
     });
 
 
@@ -112,7 +113,8 @@ function AdContent() {
             "image_url": "",
             "base_id": 1,
             "tag_id": 1,
-            "user_id": 1
+            "user_id": 1,
+            "contact_info": ""
         }))
     }
 
@@ -139,7 +141,8 @@ function AdContent() {
             "image_url": "",
             "base_id": 1,
             "tag_id": 1,
-            "user_id": 1
+            "user_id": 1,
+            "contact_info": ""
         })
         setAdId({
             "postsid": ""
@@ -149,7 +152,7 @@ function AdContent() {
     
     const onDelete = (e) => {
         e.preventDefault();
-        setAdDeleteMessage(false);
+        setAdDeleteMessage(true);
 
         return fetch('http://localhost:3001/ads', {
             method: 'DELETE', 
@@ -180,7 +183,7 @@ function AdContent() {
             <Button variant="contained" onClick={handleClickOpenPlaceAd} startIcon={<AddCircleIcon fontSize="5em" />} style={{ fontWeight: "750", fontSize: "1.5em", backgroundColor: "#1974d3", color: "#ffe6b6", width: "17vw", margin: '5vh', padding: '5vh' }}>Place Ad</Button><br></br>
             <Button variant="outlined" onClick={handleClickOpenEditAd} startIcon={<EditIcon />} style={{ fontWeight: "750", fontSize: "1.5em", backgroundColor: "#1974d3", color: "#ffe6b6", width: "17vw", margin: '5vh', padding: '5vh' }}>Edit Ad</Button><br></br>
             <Button variant="outlined" onClick={handleClickOpenRemoveAd} startIcon={<DeleteIcon />} style={{ fontWeight: "750", fontSize: "1.5em", backgroundColor: "#1974d3", color: "#ffe6b6", width: "17vw", margin: '5vh', padding: '5vh' }}>Remove Ad</Button><br></br>
-            <Dialog open={openPlaceAd} onClose={handleClosePlaceAd} aria-labelledby="form-dialog-title" width="50vw" margin="2vh">
+            <Dialog open={openPlaceAd} margin="2vh">
                 <DialogTitle id="form-dialog-title">New Ad</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -188,6 +191,7 @@ function AdContent() {
                         </DialogContentText>
                             <TextField
                                 autoFocus
+                                fullWidth
                                 margin="dense"
                                 id="post_title"
                                 value={values['post_title']}
@@ -198,6 +202,7 @@ function AdContent() {
                             />
                             <TextField
                                 autoFocus
+                                fullWidth
                                 margin="dense"
                                 id="price"
                                 value={values['price']}
@@ -208,12 +213,23 @@ function AdContent() {
                             />
                             <TextField
                                 autoFocus
+                                fullWidth
                                 margin="dense"
                                 id="image_url"
                                 value={values['image_url']}
                                 label="Image URL"
                                 variant="filled"
                                 onChange={handleChange("image_url")}
+                            />
+                            <TextField
+                                autoFocus
+                                fullWidth
+                                margin="dense"
+                                id="image_url"
+                                value={values['contact_info']}
+                                label="Email / Phone Number"
+                                variant="filled"
+                                onChange={handleChange("contact_info")}
                             />
                             <TextField
                                 select
@@ -247,7 +263,7 @@ function AdContent() {
                                 margin="dense"
                                 id="post_body"
                                 value={values['post_body']}
-                                label="Description (including contact info)"
+                                label="Description"
                                 variant="outlined"
                                 fullWidth
                                 onChange={handleChange("post_body")}
@@ -267,10 +283,11 @@ function AdContent() {
                 <DialogTitle id="form-dialog-title">Edit Existing Ad</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please edit the data below
+                    Input an Ad ID to Edit
                         </DialogContentText>
                                     <TextField
                                         autoFocus
+                                        fullWidth
                                         margin="dense"
                                         id="postsid"
                                         value={adId['postsid']}
@@ -279,7 +296,10 @@ function AdContent() {
                                         onChange={handleChangeAdId("postsid")}
                                         style={{ marginRight: '7vw' }}
                                     />
-                                    <Button onClick={getAdInfo}>Find Ad Info</Button>
+                                    <Button onClick={handleCloseEditAd} color="primary">
+                                        Cancel
+                                    </Button>
+                                    <Button onClick={getAdInfo} color="primary" variant="contained">Find Ad Info</Button>
                 </DialogContent>                    
             </Dialog>
 
@@ -287,10 +307,11 @@ function AdContent() {
                     <DialogTitle id="form-dialog-title">Edit Existing Ad</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                Please edit the data below
+                            Please edit the data below    
                             </DialogContentText>                                                
                                     <TextField
                                         autoFocus
+                                        fullWidth
                                         margin="dense"
                                         id="post_title"
                                         value={values['post_title']}
@@ -301,6 +322,7 @@ function AdContent() {
                                     />
                                     <TextField
                                         autoFocus
+                                        fullWidth
                                         margin="dense"
                                         id="price"
                                         value={values['price']}
@@ -311,12 +333,23 @@ function AdContent() {
                                     />
                                     <TextField
                                         autoFocus
+                                        fullWidth
                                         margin="dense"
                                         id="image_url"
                                         value={values['image_url']}
                                         label="Image URL"
                                         variant="filled"
                                         onChange={handleChange("image_url")}
+                                    />
+                                    <TextField
+                                        autoFocus
+                                        fullWidth
+                                        margin="dense"
+                                        id="image_url"
+                                        value={values['contact_info']}
+                                        label="Email / Phone Number"
+                                        variant="filled"
+                                        onChange={handleChange("contact_info")}
                                     />
                                     <TextField
                                         select
@@ -350,7 +383,7 @@ function AdContent() {
                                         margin="dense"
                                         id="post_body"
                                         value={values['post_body']}
-                                        label="Description (including contact info)"
+                                        label="Description"
                                         variant="outlined"
                                         fullWidth
                                         onChange={handleChange("post_body")}
@@ -387,7 +420,7 @@ function AdContent() {
                     <Button onClick={handleCloseRemoveAd} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={onDelete} color="secondary" variant='outlined'>
+                    <Button onClick={onDelete} color="secondary" variant='contained'>
                         Delete
                      </Button>
                 </DialogActions>
