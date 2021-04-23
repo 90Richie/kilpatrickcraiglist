@@ -3,11 +3,11 @@ import heading from "../pictures/Heading.jpg"
 function About () {
     // git checkout
     return (
-<div>
-        <div className="About">
-            <img src={heading} />
+<div className="About">
+        <div className="header">
+            <img src={heading} className="logo"/>
             <h3>About Kilpatrick Craig's List</h3>
-            <p>A secure platform to buy, trade, and sell with other DOD memberes.</p>
+            <p>A secure platform to buy, trade, and sell with other DOD members.</p>
         </div>
 
         <h2>Our Team</h2>

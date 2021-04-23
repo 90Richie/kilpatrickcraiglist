@@ -1,5 +1,8 @@
 .Ads {
+    display: flex;
+    flex-direction: column;
     grid-row: 2;
     height: auto;
     min-height: 77vh;
+    align-items: center;
 }

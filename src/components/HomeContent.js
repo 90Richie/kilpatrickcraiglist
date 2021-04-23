@@ -1,6 +1,11 @@
 import './HomeContent.css'
 import Ad from './Ad.js'
 import ClearIcon from '@material-ui/icons/Clear';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { Button } from '@material-ui/core';
 import { useState, useEffect } from 'react';
 // import mockData from '../mockdata/mockaddata.json'
@@ -12,6 +17,7 @@ const HomeContent= () => {
     const [ url, setUrl ] = useState('http://localhost:3001/ads')
     const [ filterName, setFilterName] = useState('All Ads')
     const [ locationName, setLocationName] = useState('All Locations')
+    const [ openAd, setOpenAd] = useState(false);
 
 
     useEffect(() => {
@@ -27,7 +33,6 @@ const HomeContent= () => {
         if (typeof filter === "string" && typeof location === "string") {
             setUrl(`http://localhost:3001/ads`)
         }
-
 
         return fetch(url, {
                     mode:'cors',
@@ -48,7 +53,7 @@ const HomeContent= () => {
                 <Button variant="outlined" onClick={() => {setFilter(1); setFilterName('Wanted')}} style={{margin: '3%', width: '9vw', backgroundColor: '#ffcc98', color: '#172f4b', fontWeight: "900"}}>Wanted</Button><br></br>
             </div>    
             <div className="Adlist">
-            {ads.map(ad => <Ad image={ad['image_url']} title={ad['post_title']} price={ad['price']} body={ad['post_body']} timestamp={ad['created_at']} tagid={ad['tag_id']} postsid={ad['postsid']} location={ad['base_id']}/>
+            {ads.map(ad => <Ad onClick={() => {setOpenAd(true); console.log(openAd)}} image={ad['image_url']} title={ad['post_title']} price={ad['price']} body={ad['post_body']} timestamp={ad['created_at']} tagid={ad['tag_id']} postsid={ad['postsid']} location={ad['base_id']} contactinfo={ad['contact_info']}/>
             )}
             </div>
             <div className="Locations">
@@ -56,6 +61,19 @@ const HomeContent= () => {
                 <h4>Current Location: {locationName} </h4>
                 <Button variant="outlined" onClick={() => {setLocation(2); setLocationName('Fort Hood')}} style={{margin: '3%', width: '9vw', backgroundColor: '#ffcc98', color: '#172f4b', fontWeight: "900"}}>Fort Hood</Button><br></br>
                 <Button variant="outlined" onClick={() => {setLocation(3); setLocationName('Lackland JBSA')}} style={{margin: '3%', width: '9vw', backgroundColor: '#ffcc98', color: '#172f4b', fontWeight: "900"}}>Lackland JBSA</Button><br></br>
+            </div>
+
+            <div>
+            <Dialog open={openAd}  margin="2vh">
+                <DialogTitle id="form-dialog-title">Ad Info</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Let Google help apps determine location. This means sending anonymous location data to
+                        Google, even when no apps are running.
+                    </DialogContentText>
+                </DialogContent>                    
+            </Dialog>
+
             </div> 
         </div>
     )
